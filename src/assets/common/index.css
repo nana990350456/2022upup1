@@ -1,0 +1,17 @@
+.elDatePicker.el-picker-panel {
+  color: #fff;
+  background: #002450 !important;
+  border: 1px solid #1384b4;
+}
+.elDatePicker.el-picker-panel .el-picker-panel__icon-btn {
+  color: #ffffff;
+}
+.elDatePicker.el-picker-panel .el-date-picker__header-label {
+  color: #ffffff;
+}
+.elDatePicker.el-picker-panel .el-date-table th {
+  color: #ffffff;
+}
+.elDatePicker .el-date-table td.disabled div {
+  background: aqua !important;
+}

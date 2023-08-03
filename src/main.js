@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from "./router/index.js" //引入你新建的router文件
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import router from './router/index.js' //引入你新建的router文件
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+// 导入mockjs
+import './mock/index.js'
 
 // 公共less文件
 import '@/assets/common/index.less'
@@ -14,15 +17,32 @@ import './utils/drag'
 import * as echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
+// 引入lottie-web
+import lottie from 'lottie-web'
+Vue.prototype.$lottie = lottie
+
 // dataV轮播图
 // 将自动注册所有组件为全局组件
 import dataV from '@jiaminghi/data-view'
 Vue.use(dataV)
 
-Vue.config.productionTip = false
-Vue.use(ElementUI);
-new Vue({
+// 注册全局组件
+import components from './components'
+Vue.use(components)
 
-  render: h => h(App),
-  router,
+// 引入vuex
+import store from '@/store'
+console.log(process.env.VUE_APP_SERVER_URL, 'envv')
+console.log(process.env, 'en')
+Vue.config.productionTip = false
+Vue.use(ElementUI)
+new Vue({
+  store,
+  beforeCreate() {
+    //在初始化阶段前
+    // 定义全局事件总线
+    Vue.prototype.$bus = this
+  },
+  render: (h) => h(App),
+  router
 }).$mount('#app')

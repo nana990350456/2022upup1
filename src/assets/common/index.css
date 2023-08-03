@@ -1,17 +1,38 @@
-.elDatePicker.el-picker-panel {
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.el-picker-panel {
   color: #fff;
   background: #002450 !important;
   border: 1px solid #1384b4;
 }
-.elDatePicker.el-picker-panel .el-picker-panel__icon-btn {
+.el-picker-panel .el-picker-panel__icon-btn {
   color: #ffffff;
 }
-.elDatePicker.el-picker-panel .el-date-picker__header-label {
+.el-picker-panel .el-date-picker__header-label {
   color: #ffffff;
 }
-.elDatePicker.el-picker-panel .el-date-table th {
+.el-picker-panel .el-date-table th {
   color: #ffffff;
 }
-.elDatePicker .el-date-table td.disabled div {
+.el-picker-panel.rightEnd {
+  top: 132px !important;
+  left: 813px !important;
+}
+.el-picker-panel.rightEnd .el-picker-panel__sidebar {
+  background: #002450 !important;
+  border: 1px solid #1384b4;
+}
+.el-picker-panel.rightEnd .el-picker-panel__sidebar .el-picker-panel__shortcut {
+  text-align: center;
+  color: #fff;
+}
+.el-picker-panel.rightEnd .popper__arrow {
+  left: 340px !important;
+}
+.el-date-table td.disabled div {
   background: aqua !important;
 }

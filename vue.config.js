@@ -1,12 +1,12 @@
-
 const path = require('path')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
+console.log(process.env.NODE_ENV, 'env')
 module.exports = {
   lintOnSave: false,
-  publicPath: '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   parallel: false,
@@ -33,7 +33,43 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    },
-  }
-}
+    }
+  },
+  // chainWebpack: (config) => {
+  //   config.module
+  //     .rule('css')
+  //     .oneOf('normal')
+  //     .use('css-loader')
+  //     .tap((options) => {
+  //       options.modules = { auto: true }
+  //       return options
+  //     })
+  // }
+  css: {
+    extract: false,
+    // requireModuleExtension: true,
+    // requireModuleExtension: true,
+    sourceMap: process.env.NODE_ENV === 'development',
 
+    loaderOptions: {
+      sass: {
+        additionalData: `@import "~@/styles/variables.module.scss";`
+      }
+    }
+  }
+  //     scss: {
+  //       // additionalData: `@import "~@/style/variables.module.scss";`
+  //       additionalData(content, loaderContext) {
+  //         const { resourcePath, rootContext } = loaderContext
+  //         const relativePath = path.relative(rootContext, resourcePath)
+  //         if (
+  //           relativePath.replace(/\\/g, '/') !== 'src/styles/variables.scss'
+  //         ) {
+  //           return '@import "~@/styles/variables.scss";' + content
+  //         }
+  //         return content
+  //       }
+  //     }
+  //   }
+  // }
+}

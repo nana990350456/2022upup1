@@ -1,62 +1,62 @@
 <template>
-	<div>
-		<el-menu
-			text-color="#fff"
-			background-color="transparent"
-			active-background="#fff"
-			active-text-color="#000"
-			:default-active="$route.path"
-			:unique-opened="true"
-			class="el-menu-vertical-demo"
-			@open="handleOpen"
-			@close="handleClose"
-			router
-		>
-			<el-submenu v-for="item in menuList" :index="item.name" :key="item.name">
-				<!-- 自定义字体和图表 -->
-				<template slot="title">
-					<i class="el-icon-menu"></i>
-					<!-- 绑定icon图标 -->
-					<!-- <svg-icon :icon-class="item.meta.icon" class="titleicon" /> -->
-					<span>{{ item.name }}</span>
-				</template>
-				<el-menu-item :index="child.path" v-for="child in item.children" :key="child.name">
-					<i class="el-icon-menu"></i>
-					<!-- <svg-icon :icon-class="item.meta.icon" class="titleicon" /> -->
-					{{ child.name }}
-				</el-menu-item>
-			</el-submenu>
-		</el-menu>
-	</div>
+  <div>
+    <el-menu
+      text-color="#fff"
+      background-color="transparent"
+      active-background="#fff"
+      active-text-color="#000"
+      :default-active="$route.path"
+      :unique-opened="true"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      router
+    >
+      <el-submenu v-for="item in menuList" :index="item.name" :key="item.name">
+        <!-- 自定义字体和图表 -->
+        <template slot="title">
+          <i class="el-icon-menu"></i>
+          <!-- 绑定icon图标 -->
+          <!-- <svg-icon :icon-class="item.meta.icon" class="titleicon" /> -->
+          <span>{{ item.name }}</span>
+        </template>
+        <el-menu-item
+          :index="child.path"
+          v-for="child in item.children"
+          :key="child.name"
+        >
+          <i class="el-icon-menu"></i>
+          <!-- <svg-icon :icon-class="item.meta.icon" class="titleicon" /> -->
+          {{ child.meta.title }}
+        </el-menu-item>
+      </el-submenu>
+    </el-menu>
+  </div>
 </template>
 
 <script>
-
-import { menuList } from "@/router";
+import { menuList } from '@/router'
 export default {
-	name: "Page",
-	components: {
-
-	},
-	props: {},
-	data() {
-		return {
-			menuList: menuList
-		};
-	},
-	mounted(){
-   console.log(menuList,'menuList');
-	},
-	methods: {
-		handleOpen(key, keyPath) {
-			console.log(key, keyPath);
-		},
-		handleClose(key, keyPath) {
-			console.log(key, keyPath);
-		}
-
-	}
-};
+  name: 'Page',
+  components: {},
+  props: {},
+  data() {
+    return {
+      menuList: menuList
+    }
+  },
+  mounted() {
+    console.log(menuList, 'menuList')
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath)
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 // // 图标样式设置

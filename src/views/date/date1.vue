@@ -1,105 +1,156 @@
 <template>
   <div>
-<div class="home">
-    <!-- 在需要右键菜单的元素，绑定contextmenu事件 -->
-    <div 
-    	class="test" v-for="item in menus" :key="item" 
-    	@contextmenu.prevent="openMenu($event,item)">{{item}}</div>
-    	<!-- 右键菜单部分 -->
-    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="handleDelete">删除</li>
-      <li @click="handleDownloadFile">下载</li>
-      <li @click="handlePreviewFile">预览</li>
-    </ul>
-  </div>
-<el-tree :data="nata" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+    <div class="home">
+      <!-- 在需要右键菜单的元素，绑定contextmenu事件 -->
+      <div
+        class="test"
+        v-for="item in menus"
+        :key="item"
+        @contextmenu.prevent="openMenu($event, item)"
+      >
+        {{ item }}
+      </div>
+      <!-- 右键菜单部分 -->
+      <ul
+        v-show="visible"
+        :style="{ left: left + 'px', top: top + 'px' }"
+        class="contextmenu"
+      >
+        <li @click="handleDelete">删除</li>
+        <li @click="handleDownloadFile">下载</li>
+        <li @click="handlePreviewFile">预览</li>
+      </ul>
+    </div>
+    <el-tree
+      :data="nata"
+      :props="defaultProps"
+      @node-click="handleNodeClick"
+    ></el-tree>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'JjjjDate133',
-    data() {
-        return {
-         menus:[1,2,3], // 模拟数据
-      rightClickItem:'',
+  name: 'JjjjDate133',
+  data() {
+    return {
+      menus: [1, 2, 3], // 模拟数据
+      rightClickItem: '',
       visible: false, // 是否展示右键菜单
-      top:0,
-      left:0,
-      nata: [{
+      top: 0,
+      left: 0,
+      nata: [
+        {
           label: '一级 1',
-          children: [{
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            }]
-          }]
-        }, {
+          children: [
+            {
+              label: '二级 1-1',
+              children: [
+                {
+                  label: '三级 1-1-1'
+                }
+              ]
+            }
+          ]
+        },
+        {
           label: '一级 2',
-          children: [{
-            label: '二级 2-1',
-            children: [{
-              label: '三级 2-1-1'
-            }]
-          }, {
-            label: '二级 2-2',
-            children: [{
-              label: '三级 2-2-1'
-            }]
-          }]
-        }, {
+          children: [
+            {
+              label: '二级 2-1',
+              children: [
+                {
+                  label: '三级 2-1-1'
+                }
+              ]
+            },
+            {
+              label: '二级 2-2',
+              children: [
+                {
+                  label: '三级 2-2-1'
+                }
+              ]
+            }
+          ]
+        },
+        {
           label: '一级 3',
-          children: [{
-            label: '二级 3-1',
-            children: [{
-              label: '三级 3-1-1'
-            }]
-          }, {
-            label: '二级 3-2',
-            children: [{
-              label: '三级 3-2-1'
-            }]
-          }]
-        }],
-        defaultProps: {
-          children: 'children',
-          label: 'label'
+          children: [
+            {
+              label: '二级 3-1',
+              children: [
+                {
+                  label: '三级 3-1-1'
+                }
+              ]
+            },
+            {
+              label: '二级 3-2',
+              children: [
+                {
+                  label: '三级 3-2-1'
+                }
+              ]
+            }
+          ]
         }
-        };
-    },
+      ],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      }
+    }
+  },
 
-    mounted() {
-        
-    },
+  mounted() {
+    // this.$bus.$once('hello', (data) => {   //$once只触发一次
+    //   //绑定当前事件（这里以hello为例）
+    //   console.log('我是data组件，收到了数据', data)
+    // })
+      this.$bus.$on('hello', (data,...params) => {  //传的形参很多的时候，可以用...来接收剩余参数，形成一个数组 
+      //绑定当前事件（这里以hello为例）
+      console.log('我是data组件，收到了数据', data,params)
+    })
+  },
+  beforeDestroy(){
+    console.log(this);
+    this.$bus.$off('hello')
+  },
+  // deactivated() {
+  //   //收尾操作，销毁
+  //   console.log(11111)
+  //   // this.$bus.$off('hello') //$off解绑当前组件所用到的事件
+  // },
 
-    methods: {
-         handleNodeClick(data) {
-        console.log(data);
-      },
-          // 打开右键菜单
-    openMenu(e,item){
-      this.visible = true;
-      this.top = e.pageY;
-      this.left = e.pageX;
-      this.rightClickItem = item;
+  methods: {
+    handleNodeClick(data) {
+      console.log(data)
+    },
+    // 打开右键菜单
+    openMenu(e, item) {
+      this.visible = true
+      this.top = e.pageY
+      this.left = e.pageX
+      this.rightClickItem = item
     },
     // 关闭右键菜单
-    closeMenu(){
-      this.visible = false;
+    closeMenu() {
+      this.visible = false
     },
-	
-    handleDelete(){
-        console.log('删除');
+
+    handleDelete() {
+      console.log('删除')
     },
-    handleDownloadFile(){
-        console.log('下载');
+    handleDownloadFile() {
+      console.log('下载')
     },
-    handlePreviewFile(){
-        console.log('预览');
-    },
-    },
-    watch: {
-     // 监听 visible，来触发关闭右键菜单，调用关闭菜单的方法
+    handlePreviewFile() {
+      console.log('预览')
+    }
+  },
+  watch: {
+    // 监听 visible，来触发关闭右键菜单，调用关闭菜单的方法
     visible(value) {
       if (value) {
         document.body.addEventListener('click', this.closeMenu)
@@ -108,22 +159,21 @@ export default {
       }
     }
   }
-
-};
+}
 </script>
 
 <style lang="less" scoped>
-.home{
+.home {
   display: flex;
   justify-content: space-around;
   width: 100%;
   height: 600px;
-  .test{
+  .test {
     width: 80px;
     height: 60px;
     background-color: pink;
-    text-align:center;
-    font-size:32px;  
+    text-align: center;
+    font-size: 32px;
     color: green;
   }
   .contextmenu {
@@ -148,5 +198,4 @@ export default {
     background: #eee;
   }
 }
-
 </style>

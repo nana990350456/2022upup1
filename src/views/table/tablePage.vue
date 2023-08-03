@@ -1,50 +1,86 @@
 <template>
   <div class="hello">
-<!-- 上面表格 -->
+    <!-- 上面表格 -->
+    <span class="title"> eeeeeeeeeee11111</span>
+    <input
+      v-model="input"
+      placeholder="请输入内容请输入内容请输入内容请输入内容"
+      style="
+        width: 200px;
+        height: 100px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+      "
+    />
+    <!-- <div>123222222222{{ $style['--npcolor'] }}</div> -->
+
     <el-table
       ref="tableRef"
+      class="topTable"
       :data="table.list"
+      row-key="id"
       border
-      style="width: 60%"
+      show-summary
+      style="width: 80%"
       highlight-current-row
       @row-click="rowClick"
-       @row-contextmenu="rightClick"
+      @row-contextmenu="rightClick"
     >
-      <el-table-column type="index" width="50" fixed> </el-table-column>
+      <el-table-column type="index" width="50"> </el-table-column>
       <template v-for="(item, i) in tableInfo">
         <el-table-column
           :key="i"
-          :prop="item.key"
+          :prop="tableInfo1111[i].key"
           :label="item.value"
           :width="item.width"
-          :fixed="item.fixed"
         >
+          <template slot-scope="scope" slot="header">
+            <span v-if="item.key === 'data3'">
+              {{ item.key }}
+              <el-tooltip
+                :aa="scope"
+                class="item"
+                effect="dark"
+                content="这里指定悬浮提示文字内容"
+                placement="top-start"
+              >
+                <i
+                  class="el-icon-warning"
+                  style="color:#409eff; margin-left:5px;'"
+                >
+                </i>
+              </el-tooltip>
+            </span>
+            <span v-else>{{ item.key }}</span>
+          </template>
           <template v-slot="scope">
-            <span>{{ scope.row[item.key] }}</span>
+            <span>
+              {{ scope.row[tableInfo1111[i].key] }}
+            </span>
           </template>
         </el-table-column>
       </template>
-        <el-table-column  label="操作" width="300">
-						<template v-slot="{row}">
-							<el-button @click="edit(row)">编辑</el-button>
-							<el-button @click="deleteClick(row)">删除</el-button>
-							<el-button @click="detailsClick(row)">查看</el-button>
-						</template>
-					</el-table-column>
+      <el-table-column label="操作" width="300" fixed="right">
+        <template v-slot="{ row }">
+          <el-button @click="edit(row)">编辑</el-button>
+          <el-button @click="deleteClick(row)">删除</el-button>
+          <el-button @click="detailsClick(row)">查看</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 右键菜单 -->
     <!-- 右键菜单 -->
-<div id="menu" class="menuDiv">
-  <ul class="menuUl">
-    <li
-        v-for="(item, index) in menus"
-        :key="index"
-        @click.stop="infoClick(index)"
-    >
-      {{ item.name }}
-    </li>
-  </ul>
-</div>
+    <div id="menu" class="menuDiv">
+      <ul class="menuUl">
+        <li
+          v-for="(item, index) in menus"
+          :key="index"
+          @click.stop="infoClick(index)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+    </div>
     <p>底部表格</p>
     <el-table
       ref="tableBottomRef"
@@ -62,7 +98,8 @@
           }}</span>
         </template>
       </el-table-column> -->
-      <el-table-column type="index" :index="indexMethod" width="50"> </el-table-column>
+      <el-table-column type="index" :index="indexMethod" width="50">
+      </el-table-column>
       <template v-for="(item, i) in tableInfo2">
         <el-table-column
           :key="i"
@@ -77,18 +114,20 @@
         </el-table-column>
       </template>
     </el-table>
-    <Dialog :showDialog.sync="showDialog"/>
+    <Dialog :showDialog.sync="showDialog" />
     <!-- echarts -->
-<!-- <div ref="containerRef" style="width:70%;height:376px;float: left"></div> -->
+    <!-- <div ref="containerRef" style="width:70%;height:376px;float: left"></div> -->
   </div>
 </template>
 
 <script>
-import { tableInfo, tableInfo2 } from './table1.js'
-import Dialog from "./dialog.vue";
+import Sortable from 'sortablejs'
+import { tableInfo, tableInfo2, tableInfo1111 } from './table1.js'
+import Dialog from './dialog.vue'
+// import styles from '@/styles/variables.module.scss'
 export default {
   name: 'HelloWorld',
-  components:{
+  components: {
     Dialog
   },
   props: {
@@ -96,13 +135,16 @@ export default {
   },
   data() {
     return {
+      input:
+        '1111111111111111111111111111111111<br>111111111请输入内容请输入内容请输入内容请输入内容请输入内容',
+      tableInfo1111,
       //右键菜单
-   menus: [
-     { name: '查看', operType: 1 },
-     { name: '新增', operType: 2 },
-     { name: '删除', operType: 3 },
-     { name: '修改', operType: 4 }
-   ],
+      menus: [
+        { name: '查看', operType: 1 },
+        { name: '新增', operType: 2 },
+        { name: '删除', operType: 3 },
+        { name: '修改', operType: 4 }
+      ],
       tableInfo,
       tableInfo2,
       table: {
@@ -113,52 +155,94 @@ export default {
       },
       datas1: [
         {
+          id: '1',
           data1: 11111,
           data2: 22222,
           data3: 33333,
           data4: 44444,
           data5: 55555,
-          data6: 66666
+          data6: '10%'
         },
         {
+          id: '11',
           data1: 22222,
           data2: 22222,
           data3: 33333,
           data4: 44444,
           data5: 55555,
-          data6: 66666
+          data6: '10%'
         },
         {
+          id: '111',
           data1: 33333,
           data2: 22222,
           data3: 33333,
           data4: 44444,
           data5: 55555,
-          data6: 66666
+          data6: '10%'
         },
         {
+          id: '1111',
           data1: 44444,
           data2: 22222,
           data3: 33333,
           data4: 44444,
           data5: 55555,
-          data6: 66666
+          data6: '10%'
         },
         {
+          id: '11111',
           data1: 55555,
           data2: 22222,
           data3: 33333,
           data4: 44444,
           data5: 55555,
-          data6: 66666
+          data6: '10%'
         },
         {
+          id: '111111',
           data1: 66666,
           data2: 22222,
           data3: 33333,
           data4: 44444,
           data5: 55555,
-          data6: 66666
+          data6: '10%'
+        },
+        {
+          id: '11111111',
+          data1: 66666,
+          data2: 22222,
+          data3: 33333,
+          data4: 44444,
+          data5: 55555,
+          data6: '10%'
+        },
+        {
+          id: '1111111122',
+          data1: 66666,
+          data2: 22222,
+          data3: 33333,
+          data4: 44444,
+          data5: 55555,
+          data6: '10%'
+        },
+        {
+          id: '11111111222333',
+          data1: 66666,
+          data2: 22222,
+          data3: 33333,
+          data4: 44444,
+          data5: 55555,
+          data6: '10%'
+        },
+        {
+          id: '11111111222333444',
+          data1: 66666,
+          data2: 22222,
+          data3: 33333,
+          data4: 44444,
+          data5: 55555,
+          data6: '10%'
         }
       ],
       datas2: [
@@ -261,19 +345,40 @@ export default {
           data6: 666662
         }
       ],
-      showDialog:false,
+      showDialog: false,
       tableVal: '11111',
       cur: 0, // 默认选中第一个值
-      radio: '1'
+      radio: '1',
+      color: 'red'
+      // styles
     }
+  },
+  computed: {
+    cssVars() {
+      return {
+        '--color': this.color
+      }
+    }
+    // $style() {
+    //   return styles // 返回样式对象
+    // }
   },
   created() {
     this.table.list = this.datas1
     this.tableBottom.listBottom = this.datas2
-    
   },
-  mounted(){
-//  this.getEchart1()
+  mounted() {
+    this.infinitScroll()
+    // 阻止默认行为
+    document.body.ondrop = function (event) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    this.columnDrop()
+
+    // console.log(styles, 'styles')
+
+    //  this.getEchart1()
   },
   //     mounted(){
   // this.$nextTick(function(){
@@ -290,205 +395,109 @@ export default {
     }
   },
   methods: {
-    deleteClick(row,index){
-      console.log(index);
-        // console.log(row);
-     this.datas1.splice(index,1)
+    //列拖拽
+    columnDrop() {
+      const wrapperTr = document.querySelector('.el-table__header-wrapper tr')
+      this.sortable = Sortable.create(wrapperTr, {
+        animation: 180,
+        delay: 0,
+        onEnd: (evt) => {
+          // console.log(evt, '测试22222222')
+          // console.log(evt.oldIndex, evt.newIndex, '测试1111')
+          const oldItem = this.tableInfo1111[evt.oldIndex - 1]
+          this.tableInfo1111.splice(evt.oldIndex - 1, 1)
+          this.tableInfo1111.splice(evt.newIndex - 1, 0, oldItem)
+        }
+      })
+    },
+    infinitScroll() {
+      // 拿到表格挂载后的真实DOM
+      const table = this.$refs.tableRef
+      // 拿到表格中承载数据的div元素
+      const divData = table.bodyWrapper
+      console.log(divData, 'divData')
+      divData.onmouseover = function () {
+        clearInterval(t)
+      } //鼠标移入，停止滚动
+      divData.onmouseout = function () {
+        start()
+      } //鼠标移出，继续滚动
+
+      // 拿到元素后，对元素进行定时增加距离顶部距离，实现滚动效果(此配置为每100毫秒移动1像素)
+      let t
+      function start() {
+        // 数据少于表格高度停止滚动
+        if (divData.clientHeight >= divData.scrollHeight) {
+          return
+        }
+        t = setInterval(() => {
+          // 元素自增距离顶部1像素
+          divData.scrollTop += 1
+          // 判断元素是否滚动到底部(可视高度+距离顶部=整个高度)
+          if (
+            divData.clientHeight + divData.scrollTop ==
+            divData.scrollHeight
+          ) {
+            // 重置table距离顶部距离
+            divData.scrollTop = 0
+          }
+        }, 100)
+      }
+      start()
+    },
+    mmm() {},
+    deleteClick(row, index) {
+      console.log(index)
+      // console.log(row);
+      this.datas1.splice(index, 1)
     },
     // table的右键点击当前行事件
-rightClick(row, column, event) {
-  let menu = document.querySelector("#menu");
-  //阻止元素发生默认的行为
-  event.preventDefault();
-  // 根据事件对象中鼠标点击的位置，进行定位
-  menu.style.left = event.pageX + 10 + "px";
-  menu.style.top = event.pageY - 30 + "px";
-  // 改变自定义菜单的隐藏与显示
-  menu.style.display = "block";
-  menu.style.zIndex = 1000;
-},
-// table的左键点击当前行事件
-    clickRow(row, column, event) {
-      let menu = document.querySelector("#menu");
-      menu.style.display = "none";
+    rightClick(row, column, event) {
+      let menu = document.querySelector('#menu')
+      //阻止元素发生默认的行为
+      event.preventDefault()
+      // 根据事件对象中鼠标点击的位置，进行定位
+      menu.style.left = event.pageX + 10 + 'px'
+      menu.style.top = event.pageY - 30 + 'px'
+      // 改变自定义菜单的隐藏与显示
+      menu.style.display = 'block'
+      menu.style.zIndex = 1000
     },
-// 自定义菜单的点击事件
-infoClick(index) {
-  switch (index) {
-    case 0:
-      console.log('查看');
-      break;
-       case 1:
-      console.log('新增');
-      break;
-       case 2:
-      console.log('删除');
-      this.deleteClick()
-      break;
-       case 3:
-      console.log('修改');
-      this.edit()
-      break;
-      
-  
-    default:
-      break;
-  }
-  let menu = document.querySelector("#menu");
-  menu.style.display = "none";
-  },
+    // table的左键点击当前行事件
+    clickRow(row, column, event) {
+      let menu = document.querySelector('#menu')
+      menu.style.display = 'none'
+    },
+    // 自定义菜单的点击事件
+    infoClick(index) {
+      switch (index) {
+        case 0:
+          console.log('查看')
+          break
+        case 1:
+          console.log('新增')
+          break
+        case 2:
+          console.log('删除')
+          this.deleteClick()
+          break
+        case 3:
+          console.log('修改')
+          this.edit()
+          break
 
-    edit(row,index){
-      this.showDialog=true
+        default:
+          break
+      }
+      let menu = document.querySelector('#menu')
+      menu.style.display = 'none'
+    },
+
+    edit(row, index) {
+      this.showDialog = true
       // console.log(row,'267');
       // console.log(index,'268');
     },
-//       getEchart1() { 
-//   const myChart = this.$echarts.init(this.$refs.containerRef)
-//       const option = {
-//   tooltip: {
-//     trigger: 'axis',
-//       itemStyle :{
-//         norma:{
-//           label:{
-//             show:true,
-//             fontSize:13,
-//             fontWeight: 'normal',
-//             marginTop:15,
-//             position:'top',
-//           }
-//         }
-//       },
-//     axisPointer: {
-//       type: 'shadow'
-//     }
-//   },
-//    legend: {
-
-//     bottom: 10,
-//     left: 'center',
-//     data: ['Baidu', 'Others']
-  
-//   },
-//   grid: {
-//     left: '3%',
-//     right: '4%',
-//     bottom: '8%',
-//     containLabel: true
-//   },
-//   xAxis: [
-//     {
-//       type: 'category',
-//       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-//        axisLabel: {
-//                     show:true,
-//                        formatter:function(v){
-//                       console.log(v);
-//                       let arr=v.split('')
-//                       let str=''
-//                       // for (let i = 0, val; (val = arr[i++]); ) {
-//                       //    str += val;
-//                       //    if(!(i%2)){   //每隔两个字换行
-//                       //     str+='\n'
-//                       //    }
-//                       //     }
-//                          for (let i = 0; i<arr.length; i++ ) {
-//                          str += arr[i];
-//                          if(!(i%2)){   //每隔1个字换行
-//                           str+='\n'
-//                          }
-//                           }
-
-//                      return str
-//                     }  
-//                 },
-//                 boundaryGap: ['0','20%']
-//     }
-//   ],
-//   yAxis: [
-//     {
-//                 type: 'value',
-//                 axisLabel: {
-//                     show:true
-//                 },
-//                 boundaryGap: ['0','20%']
-//             }
-//   ],
-
-//   series: [
-//     {
-//       name: 'Baidu',
-//       type: 'bar',
-//       barWidth: 30,
-//       stack: 'Search Engine',
-//       emphasis: {
-//         focus: 'series'
-//       },
-//         label: {
-//           show :true,
-//           position: "top"
-//       },
-//       data: [620, 732, 701, 734, 1090, 1130, 1120]
-//     },
-//     {
-//       name: 'Others',
-//       type: 'bar',
-//       stack: 'Search Engine',
-//       emphasis: {
-//         focus: 'series'
-//       },
-//       data: [62, 82, 91, 84, 109, 110, 120],
-//             label: {
-//           show : true,
-//           position: "top"
-//       },
-//     }
-//   ]
-// };
-// var selected = {};
-// var isShow;
-// for(var i = 0; i< option.series.length; i++){
-// //初始化选择值
-// selected[option.series[i].name] = true;
-// isShow= false;
-// //只显示最后一个label
-// if(i == option.series.length -1){
-// isShow= true;
-// }
-// option.series[i].label ={
-// normal: {
-// show: isShow,
-// position: 'top',
-// textStyle:{
-// fontSize: '12px',
-// //color:'#a1c9fa'
-// }
-// }
-// };
-// }
-// var fun = function(obj){
-// var showVal = 0;
-// for(var key in selected){
-// if(selected[key]){
-// for(var i=0; i<option.series.length; i++){
-// //只添加没有隐藏的列的数值
-// if(key == option.series[i].name){
-// showVal = option.series[i].data[obj.dataIndex];
-// }
-// }
-// }
-// }
-// return showVal;
-// }
-//   myChart.on('click',  function(param) {
-//             //param.name x轴值,param.data y轴值
-//             console.log(param.name+":"+param.data)
-//         });
-
-// //最后一个label的formatter 绑定一个写好的函数
-// option.series[option.series.length - 1].label.normal.formatter = fun;
-//       option && myChart.setOption(option);
-//     },
 
     rowClick(row) {
       console.log(row.data1)
@@ -522,47 +531,46 @@ infoClick(index) {
       }
     },
     arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if(this.tableVal!='11111') return
+      if (this.tableVal != '11111') return
       if (rowIndex === 5) {
-        if (
-          columnIndex == 0
-        ) {
+        if (columnIndex == 0) {
           return {
             rowspan: 1,
             colspan: 4
           }
-        }else if (columnIndex==1 || columnIndex==3 ||columnIndex==2){
-          return [0,0]
+        } else if (columnIndex == 1 || columnIndex == 3 || columnIndex == 2) {
+          return [0, 0]
         }
       }
-      if(columnIndex==1){
-        if(rowIndex ==0){
+      if (columnIndex == 1) {
+        if (rowIndex == 0) {
           return {
-             rowspan: 5,
-              colspan: 1
+            rowspan: 5,
+            colspan: 1
           }
-        } else if(rowIndex<5) {
-            return {
-             rowspan: 1,
-              colspan: 0
+        } else if (rowIndex < 5) {
+          return {
+            rowspan: 1,
+            colspan: 0
           }
         }
       }
     },
- indexMethod(index) {
-  console.log(this.tableVal,'this.tableVal');
-   return index===5 && this.tableVal== '11111'  ?'合并' : index+1
-      },
-  rowTable2(row){
-     console.log(row);
+    indexMethod(index) {
+      console.log(this.tableVal, 'this.tableVal')
+      return index === 5 && this.tableVal == '11111' ? '合并' : index + 1
+    },
+    rowTable2(row) {
+      console.log(row)
+    }
   },
-  },
-  destroyed(){
-    console.log('table销毁');
+  destroyed() {
+    console.log('table销毁')
   }
 }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
+// @import '~@/styles/variables.module.scss';
 .hello {
   position: relative;
 }
@@ -627,5 +635,41 @@ infoClick(index) {
       }
     }
   }
+}
+/deep/.topTable.el-table {
+  height: 386px;
+}
+// 去掉fixed="right"固定列表，导致出现的hover效果
+/deep/.el-table .el-table__body tr.hover-row > td {
+  background-color: transparent !important;
+}
+/deep/.el-tablle--enable-row-hover .el-table__body tr:hover > td {
+  background-color: transparent !important;
+}
+::v-deep.title {
+  // color: $primary-color;
+  display: block;
+  width: 100px;
+  height: 100px;
+  @include gradient-background(red, green);
+  color: var(--npcolor) !important;
+}
+
+/* el-table 宽度自适应 低版本浏览器，表格宽度自适应 */
+.elTable {
+  width: 100%;
+}
+.elTable/deep/ .el-table__header-wrapper table,
+.elTable/deep/ .el-table__body-wrapper table {
+  width: 100% !important;
+}
+.elTable /deep/ .el-table__body,
+.elTable /deep/ .el-table__footer,
+.elTable /deep/ .el-table__header {
+  table-layout: auto;
+}
+.elTable /deep/ .el-table__empty-block,
+.elTable/deep/ .el-table__body {
+  width: 100% !important;
 }
 </style>

@@ -1,0 +1,12 @@
+$primary-color: red;
+$secondary-color: #f9c;
+
+@mixin gradient-background($start-color, $end-color) {
+  background: linear-gradient(to right, $start-color, $end-color);
+}
+
+:export {
+  --npcolor: $primary-color;
+  --secondary-color: $secondary-color;
+  --gradient-background: mix(white, black);
+}

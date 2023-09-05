@@ -36,7 +36,7 @@ console.log(process.env.VUE_APP_SERVER_URL, 'envv')
 console.log(process.env, 'en')
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-new Vue({
+let sub=new Vue({
   store,
   beforeCreate() {
     //在初始化阶段前
@@ -46,3 +46,10 @@ new Vue({
   render: (h) => h(App),
   router
 }).$mount('#app')
+// 解决在乾坤框架下无法使用vuetool
+if (window.__POWERED_BY_QIANKUN__ && process.env.NODE_ENV === 'development') {
+  let subDiv = document.createElement('div')
+subDiv.__vue__ = sub
+document.body.appendChild(subDiv)
+
+}

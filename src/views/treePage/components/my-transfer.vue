@@ -13,7 +13,7 @@
 </template>
 
 <script>
-var docx = require('docx-preview')
+// var docx = require('docx-preview')
 
 export default {
   name: 'MyTransfer',

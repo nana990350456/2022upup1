@@ -85,28 +85,28 @@
       ref="wordRef"
       style="width: 500px; height: 500px; background: pink"
     ></div> -->
-    <VueOfficeDocx
+    <!-- <VueOfficeDocx
       :src="docx"
       style="height: 100vh"
       @rendered="rendered"
       @error="errorHandler"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
 //引入相关样式
-import '@vue-office/docx/lib/index.css'
+// import '@vue-office/docx/lib/index.css'
 // import { renderAsync } from 'docx-preview'
-import VueOfficeDocx from '@vue-office/docx'
+// import VueOfficeDocx from '@vue-office/docx'
 import MyTransfer from './components/my-transfer.vue'
 let id = 1000
 
 export default {
   name: 'treePage',
   components: {
-    MyTransfer,
-    VueOfficeDocx
+    MyTransfer
+    // VueOfficeDocx
   },
   data() {
     const CC = [

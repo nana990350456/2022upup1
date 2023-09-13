@@ -4,6 +4,10 @@ import router from './router/index.js' //引入你新建的router文件
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import '@/assets/iconfont/iconfont.css'//Font class方式
+
+import '@/assets/iconfont/iconfont.js'//Symbol方式
+
 // 导入mockjs
 import './mock/index.js'
 

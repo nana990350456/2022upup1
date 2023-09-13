@@ -1,0 +1,58 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5483925",
+      "name": "雪花",
+      "font_class": "xuehua",
+      "unicode": "e74a",
+      "unicode_decimal": 59210
+    },
+    {
+      "icon_id": "37249279",
+      "name": "任务",
+      "font_class": "renwu",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "37249280",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "37249284",
+      "name": "交友",
+      "font_class": "jiaoyou",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "37249286",
+      "name": "信息",
+      "font_class": "xinxi",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "37249287",
+      "name": "喜欢",
+      "font_class": "xihuan",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "37249295",
+      "name": "通告",
+      "font_class": "tonggao",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    }
+  ]
+}

@@ -15,7 +15,10 @@
       <el-submenu v-for="item in menuList" :index="item.name" :key="item.name">
         <!-- 自定义字体和图表 -->
         <template slot="title">
-          <i class="el-icon-menu"></i>
+          <!-- <i class="el-icon-menu"></i> -->
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-xuehua"></use>
+          </svg>
           <!-- 绑定icon图标 -->
           <!-- <svg-icon :icon-class="item.meta.icon" class="titleicon" /> -->
           <span>{{ item.name }}</span>
@@ -25,7 +28,10 @@
           v-for="child in item.children"
           :key="child.name"
         >
-          <i class="el-icon-menu"></i>
+          <!-- <i class="el-icon-menu"></i> -->
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-xuehua"></use>
+          </svg>
           <!-- <svg-icon :icon-class="item.meta.icon" class="titleicon" /> -->
           {{ child.meta.title }}
         </el-menu-item>
@@ -59,6 +65,14 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.icon {
+  width: 1em;
+  height: 1em;
+  font-size: 20px;
+  vertical-align: middle;
+  fill: currentColor;
+  overflow: hidden;
+}
 // // 图标样式设置
 // .titleicon {
 // 	margin-right: 10px;

@@ -1,74 +1,86 @@
 <template>
-  <div class="index">
-    <div class="select-file">
-      <input id="input" type="file" />
-    </div>
-    <div class="file-preview">
-      <VueOfficeDocx v-if="src" style="height: 100%" :src="src" />
-    </div>
-  </div>
+  <vue-seamless-scroll :data="listData" class="warp">
+    <ul class="item">
+      <li v-for="(item, index) in listData" :key="index">
+        <span class="title" v-text="item.title"></span>
+        <span class="date" v-text="item.date"></span>
+      </li>
+    </ul>
+  </vue-seamless-scroll>
 </template>
+
 <script>
-import VueOfficeDocx from '@vue-office/docx'
-import '@vue-office/docx/lib/index.css'
+import vueSeamlessScroll from 'vue-seamless-scroll'
+
 export default {
+  name: 'Example01Basic',
+  components: {
+    vueSeamlessScroll
+  },
   data() {
     return {
-      src: ''
-    }
-  },
-  components: {
-    VueOfficeDocx
-  },
-  mounted() {
-    this.addInputEventListener()
-  },
-  methods: {
-    /**
-     * application/msword;charset=utf-8
-     * application/pdf;charset=utf-8
-     * application/vnd.ms-excel
-     */
-    addInputEventListener() {
-      const input = document.querySelector('#input')
-      input.addEventListener('input', (e) => {
-        const fileBlob = e.target.files[0]
-
-        // // 第一种方式（通过window.URL.createObjectURL将Blob文件流转为一个路径）
-        // this.src = window.URL.createObjectURL(new Blob([fileBlob]))
-
-        // 第二种方式（转为base64编码）
-        // const fileReader = new FileReader()
-        // fileReader.readAsDataURL(fileBlob)
-        // fileReader.onload = e => {
-        //   this.src = e.target.result
-        // }
-
-        // // 第三种方式（获取到buffer）
-        fileBlob.arrayBuffer().then((buffer) => {
-          this.src = buffer
-        })
-      })
+      listData: [
+        {
+          title: '无缝滚动第一行无缝滚动第一行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第二行无缝滚动第二行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第三行无缝滚动第三行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第四行无缝滚动第四行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第五行无缝滚动第五行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第六行无缝滚动第六行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第七行无缝滚动第七行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第八行无缝滚动第八行',
+          date: '2017-12-16'
+        },
+        {
+          title: '无缝滚动第九行无缝滚动第九行',
+          date: '2017-12-16'
+        }
+      ]
     }
   }
 }
 </script>
-<style scoped>
-.index {
-  width: 100%;
-  height: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-}
-.select-file {
-  width: 100%;
-  height: 35px;
-  border-bottom: 1px dashed #ccc;
-  margin-bottom: 15px;
-}
-.file-preview {
-  width: 100%;
-  height: 100%;
-  border: 1px dashed #007acc;
+
+<style lang="scss" scoped>
+.warp {
+  height: 270px;
+  width: 360px;
+  margin: 0 auto;
+  overflow: hidden;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    li,
+    a {
+      display: block;
+      height: 30px;
+      line-height: 30px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+    }
+  }
 }
 </style>

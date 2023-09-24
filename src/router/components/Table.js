@@ -10,7 +10,7 @@ export const TableList = [
     },
     children: [
       {
-        path: 'table',
+        path: '/table',
         name: 'table',
         component: () => import('@/views/table/tablePage.vue'),
         meta: { title: '表格table' }

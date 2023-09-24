@@ -10,7 +10,7 @@ export const SearchList = [
     },
     children: [
       {
-        path: 'search',
+        path: '/search',
         name: 'search',
         component: () => import('@/views/Search/searchPage.vue'),
         meta: { title: 'test测试' }

@@ -11,12 +11,14 @@ import { EchartsList } from '@/router/components/echart'
 import { SearchList } from '@/router/components/search'
 import { TextList } from '@/router/components/TextAbout.js'
 import { ImageList } from './components/ImageAbout.js'
+import { FileList } from "./components/File.js";
 // import { threeAbout } from './components/threeAbout.js'
 
 Vue.use(VueRouter)
 
 export const menuList = [
   ...DateList,
+  ...FileList,
   ...MapList,
   ...TabChangeList,
   ...TestList,

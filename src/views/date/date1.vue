@@ -108,13 +108,14 @@ export default {
     //   //绑定当前事件（这里以hello为例）
     //   console.log('我是data组件，收到了数据', data)
     // })
-      this.$bus.$on('hello', (data,...params) => {  //传的形参很多的时候，可以用...来接收剩余参数，形成一个数组 
+    this.$bus.$on('hello', (data, ...params) => {
+      //传的形参很多的时候，可以用...来接收剩余参数，形成一个数组
       //绑定当前事件（这里以hello为例）
-      console.log('我是data组件，收到了数据', data,params)
+      console.log('我是data组件，收到了数据', data, params)
     })
   },
-  beforeDestroy(){
-    console.log(this);
+  beforeDestroy() {
+    console.log(this)
     this.$bus.$off('hello')
   },
   // deactivated() {

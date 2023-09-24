@@ -43,7 +43,7 @@
 <script>
 import { menuList } from '@/router'
 export default {
-  name: 'Page',
+  name: 'SidebarPage',
   components: {},
   props: {},
   data() {
@@ -72,6 +72,21 @@ export default {
   vertical-align: middle;
   fill: currentColor;
   overflow: hidden;
+}
+/deep/.el-menu {
+  margin-top: 10px;
+  width: 100%;
+  .el-submenu__title {
+    &:hover {
+      background: rgba(255, 255, 255, 0.6) !important;
+    }
+  }
+  .el-menu-item:hover {
+    background: rgba(255, 255, 255, 0.6) !important;
+  }
+  .el-menu-item.is-active {
+    background: rgba(255, 255, 255, 0.6) !important;
+  }
 }
 // // 图标样式设置
 // .titleicon {

@@ -10,7 +10,7 @@ export const EchartsList = [
     },
     children: [
       {
-        path: 'echarts',
+        path: '/echarts',
         name: 'echarts',
         component: () => import('@/views/echarts/echartsPage.vue'),
         meta: { title: 'echarts' }

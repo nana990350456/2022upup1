@@ -88,18 +88,6 @@ export default {
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 0px 0px 20px #fff;
   }
-  .el-menu {
-    margin-top: 10px;
-    width: 100%;
-    .el-submenu__title {
-      &:hover {
-        background: rgba(255, 255, 255, 0.6) !important;
-      }
-    }
-    .el-menu-item:hover {
-      background: rgba(255, 255, 255, 0.6) !important;
-    }
-  }
 }
 
 /deep/.el-container.is-vertical {

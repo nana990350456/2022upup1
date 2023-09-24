@@ -16,6 +16,7 @@
     "core-js": "^3.8.3",
     "echarts": "^5.3.3",
     "element-ui": "^2.15.10",
+    "js-web-screen-shot": "^1.8.0",
     "lottie-web": "^5.10.2",
     "mammoth": "^1.6.0",
     "moment": "^2.29.4",

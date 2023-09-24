@@ -10,13 +10,13 @@ export const TabChangeList = [
     },
     children: [
       {
-        path: 'tab',
+        path: '/tab',
         name: 'tab',
         component: () => import('@/views/tabPage/tabPage.vue'),
         meta: { title: 'tab栏' }
       },
       {
-        path: 'tab1',
+        path: '/tab1',
         name: 'tab1',
         component: () => import('@/views/tabPage/iframe1.vue'),
         meta: { title: 'tab1栏' }

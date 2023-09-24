@@ -10,7 +10,7 @@ export const TreeList = [
     },
     children: [
       {
-        path: 'tree',
+        path: '/tree',
         name: 'tree',
         component: () => import('@/views/treePage'),
         meta: { title: 'test测试' }

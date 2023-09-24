@@ -1,22 +1,24 @@
 import layout from '@/layout'
 export const DateList = [
   {
-    path: '/',
-    name: 'date1测试',
+    path: '/time',
+    name: 'time',
     component: layout,
-    meta: {
-      title: '其它',
-      icon: 'image'
-    },
     children: [
       {
-        path: 'date',
+        path: '/time/data',
         name: 'date',
-        component: () => import('@/views/date/date1.vue'),
-        meta: { title: 'date1测试' }
+        component: () => import('@/views/date/dateElement.vue'),
+        meta: { title: '日期' }
       },
       {
-        path: 'pall',
+        path: '/time/scrollPage',
+        name: 'scrollPage',
+        component: () => import('@/views/date/scrollPage.vue'),
+        meta: { title: '页面滚动' }
+      },
+      {
+        path: '/time/pall',
         name: 'pall',
         component: () => import('@/views/date/pallPage.vue'),
         meta: { title: 'promise.all' }

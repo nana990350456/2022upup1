@@ -10,13 +10,13 @@ export const TextList = [
     },
     children: [
       {
-        path: 'text',
+        path: '/text',
         name: 'text',
         component: () => import('@/views/textAbout/TextFold.vue'),
         meta: { title: '超出一行显示...' }
       },
       {
-        path: 'textThree',
+        path: '/textThree',
         name: 'textThree',
         component: () => import('@/views/textAbout/TextOverThree.vue'),
         meta: { title: '超出3行...并且折叠' }

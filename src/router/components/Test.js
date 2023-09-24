@@ -9,7 +9,7 @@ export const TestList = [
 			icon: "image",
 		},
 		children: [
-			{path: 'test', 
+			{path: '/test', 
          name:'test',
            component: () => import('@/views/test/testPage.vue'),
          meta: { title: 'test测试' }

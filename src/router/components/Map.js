@@ -10,7 +10,7 @@ export const MapList = [
     },
     children: [
       {
-        path: 'map',
+        path: '/map',
         name: 'map',
         component: () => import('@/views/test/map/MapContainer.vue'),
         meta: { title: 'map测试' }

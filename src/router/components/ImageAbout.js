@@ -10,7 +10,7 @@ export const ImageList = [
     },
     children: [
       {
-        path: 'image',
+        path: '/image',
         name: 'image',
         component: () => import('@/views/picAbout/imagePage.vue'),
         meta: { title: '图片相关' }

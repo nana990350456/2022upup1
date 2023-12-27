@@ -55,6 +55,8 @@ export default {
       const res = domImg.getAttribute('src')
       if (!res) {
         this.url = base64data
+        // this.$forceUpdate()
+        location.reload()
       }
     },
 

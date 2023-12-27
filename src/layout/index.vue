@@ -24,7 +24,6 @@
 
 <script>
 import siderbar from './Sidebar'
-import moment from 'moment'
 export default {
   name: 'LayoutPage',
   components: { siderbar },
@@ -50,14 +49,12 @@ export default {
     }
   },
   data() {
-    return {
-      moment
-    }
+    return {}
   },
   watch: {},
   computed: {
     currentTime() {
-      return moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+      return this.$dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
     }
   },
   created() {},

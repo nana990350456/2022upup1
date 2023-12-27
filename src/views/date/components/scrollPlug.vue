@@ -1,5 +1,6 @@
 <template>
   <div class="listScroll" ref="box">
+    {{ provideName }}
     <slot></slot>
     <slot></slot>
   </div>
@@ -8,6 +9,17 @@
 <script>
 export default {
   name: 'scrollPage',
+  inject: {
+    provideName: {
+      type: String,
+      default: '测试'
+    }
+  },
+  data() {
+    return {
+      list1111111: [{ a: 1, b: 2 }]
+    }
+  },
   created() {},
   mounted() {
     //在盒子内容高度小于可视高度时不滚动

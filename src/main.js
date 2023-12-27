@@ -16,6 +16,9 @@ import '@/assets/common/index.less'
 
 //引入自定义指令
 import './utils/drag'
+// 引入days
+import dayjs from "dayjs"
+Vue.prototype.$dayjs = dayjs;
 
 // 引入echarts
 import * as echarts from 'echarts'

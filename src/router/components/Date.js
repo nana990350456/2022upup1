@@ -22,6 +22,12 @@ export const DateList = [
         name: 'pall',
         component: () => import('@/views/date/pallPage.vue'),
         meta: { title: 'promise.all' }
+      }, 
+        {
+        path: '/time/mockData',
+        name: 'mockData',
+        component: () => import('@/views/date/mockData.vue'),
+        meta: { title: 'mock数据测试' }
       },
     ]
   }

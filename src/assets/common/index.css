@@ -34,10 +34,6 @@ div::-webkit-scrollbar-track {
 .el-picker-panel .el-date-table th {
   color: #ffffff;
 }
-.el-picker-panel.rightEnd {
-  top: 132px !important;
-  left: 813px !important;
-}
 .el-picker-panel.rightEnd .el-picker-panel__sidebar {
   background: #002450 !important;
   border: 1px solid #1384b4;
@@ -47,7 +43,7 @@ div::-webkit-scrollbar-track {
   color: #fff;
 }
 .el-picker-panel.rightEnd .popper__arrow {
-  left: 340px !important;
+  left: 128px !important;
 }
 .el-date-table td.disabled div {
   background: aqua !important;

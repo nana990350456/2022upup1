@@ -10,10 +10,16 @@
     <p>
       <button @click="lineBusBtn">点击通知用的事件总线</button>
     </p>
-    <div ref="OffsetDivRef" class="OffsetDiv">
+    <div
+      ref="OffsetDivRef"
+      class="OffsetDiv"
+      @contextmenu.prevent="showContextMenu"
+    >
       <p>盒子的高度</p>
     </div>
-    <el-button ref="btnHeightRef">elementui的button获取高度的的时候需要加$el</el-button>
+    <el-button ref="btnHeightRef"
+      >elementui的button获取高度的的时候需要加$el</el-button
+    >
   </div>
 </template>
 
@@ -26,18 +32,22 @@ export default {
     return {}
   },
   mounted() {
-     console.log(this.$refs.OffsetDivRef.offsetHeight);  //获取元素的高度=clientHeight+border
-     console.log(this.$refs.OffsetDivRef.clientWidth);  //获取元素的宽度
+    console.log(this.$refs.OffsetDivRef.offsetHeight) //获取元素的高度=clientHeight+border
+    console.log(this.$refs.OffsetDivRef.clientWidth) //获取元素的宽度
     //  因为用了组件，获取高度的时候需要加$el
-     console.log(this.$refs.btnHeightRef.$el.clientHeight); //clientHeight=高度+内边距
+    console.log(this.$refs.btnHeightRef.$el.clientHeight) //clientHeight=高度+内边距
     // this.loadAllDatalList()
   },
   computed: {
     ...mapGetters(['userCount', 'sum'])
   },
   methods: {
+    // 右键菜单，原生方法
+    showContextMenu() {
+      alert('gggggggggg')
+    },
     lineBusBtn() {
-      this.$bus.$emit('hello', '名字是张三',666,888,999)
+      this.$bus.$emit('hello', '名字是张三', 666, 888, 999)
     },
     // ...mapMutations({
     //   addCount: 'user/addCount',
@@ -90,10 +100,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .OffsetDiv {
-    background-color: lightgreen;
-    width: 300px;
-    height: 200px;
-    border-right: 1px solid pink;
-  }
+.OffsetDiv {
+  background-color: lightgreen;
+  width: 300px;
+  height: 200px;
+  border-right: 1px solid pink;
+}
 </style>

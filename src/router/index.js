@@ -41,7 +41,8 @@ const routes = [...menuList, nav]
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  base:'wxn'
 })
 
 export default router

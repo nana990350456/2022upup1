@@ -50,6 +50,7 @@
       </div>
       <dir></dir>
     </div>
+    <ul></ul>
   </div>
 </template>
 
@@ -132,7 +133,20 @@ export default {
     //  this.datatimestatus()
   },
 
-  mounted() {},
+  mounted() {
+    // this.initSSE()
+    var arr = [
+      { id: 1, name: '张三' },
+      { id: 2, name: '李四' },
+      { id: 3, name: '王五' }
+    ]
+
+    // 通过ID查询对应的对象
+    console.log(
+      arr.find((obj) => obj.id === 2),
+      'ppppp'
+    )
+  },
   computed: {
     endTime() {
       return this.startTime.getTime() + 1000 * 60 * 60 * 24 * 7
@@ -140,28 +154,25 @@ export default {
   },
 
   methods: {
-    //     datatimestatus(){
-    // this.pickerOptions.disabledDate = (time) => {
-    // 	// 一天
-    // 	let tempTime = 3600 * 1000 * 24
-    // 	 return time.getTime() < new Date()-tempTime
-    // }
-    // }
+    initSSE() {
+      let evtSource = new EventSource('sse.php')
+      let eventList = document.querySelector('ul')
+
+      evtSource.onmessage = function (e) {
+        console.log('接收消息')
+        let newElement = document.createElement('li')
+
+        newElement.textContent = 'message: ' + e.data
+        eventList.appendChild(newElement)
+      }
+      ;(evtSource.onerror = function () {
+        console.log('EventSource failed.')
+      }),
+        (evtSource.onopen = function () {
+          console.log('Connection to server opened.')
+        })
+    }
   },
-
-  //  // 单独处理时间的函数
-  //   dealDisabledDate (time) {
-  //     console.log(time,'time');
-  //     // time.getTime是把选中的时间转化成自1970年1月1日 00:00:00 UTC到当前时间的毫秒数
-  //     // Date.now()是把今天的时间转化成自1970年1月1日 00:00:00 UTC到当前时间的毫秒数,这样比较好比较
-  //     // return的值,true是不可以操作选择,false可以操作选择,比如下面这个判断就只能选择今天之后的时间
-  //     return time.getTime() > Date.now()
-
-  //     // 这里减8.64e7的作用是,让今天的日期可以选择,如果不减的话,今天的日期就不可以选择,判断中写<= 也是没用的,一天的毫秒数就是8.64e7
-  //     // return time.getTime() <= Date.now()
-  //     // return time.getTime() < Date.now() - 8.64e7
-  //   }
-  // },
   destroyed() {
     console.log('tab销毁')
   }

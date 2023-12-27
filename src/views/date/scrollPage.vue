@@ -34,12 +34,15 @@
 </template>
 
 <script>
-import VueSeamlessScroll from 'vue-seamless-scroll'
+// import VueSeamlessScroll from 'vue-seamless-scroll'
 import ScrollPlug from './components/scrollPlug.vue' //手写无缝滚动
 export default {
   name: 'ScrollPage',
+  provide: {
+    provideName: '祖孙传值'
+  },
   components: {
-    VueSeamlessScroll,
+    // VueSeamlessScroll,
     ScrollPlug
   },
 
@@ -117,7 +120,9 @@ export default {
     }
   },
 
-  mounted() {},
+  mounted() {
+    console.log(this.$children, '子组件')
+  },
 
   methods: {
     ScrollEnd() {

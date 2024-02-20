@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>1.jiaminghi/data-view插件滚动测试1</h3>
+    <h3>1.jiaminghi/data-view插件滚动测试2</h3>
     <dv-scroll-board
       :config="config"
       style="width: 500px; height: 220px; margin-top: 30px"

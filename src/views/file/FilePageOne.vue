@@ -4,6 +4,7 @@
     <div class="pic">
       <img :src="url" alt="" class="imgMark" />
     </div>
+    <el-button @click="onAddFolder">上传文件夹</el-button>
   </div>
 </template>
 
@@ -23,6 +24,30 @@ export default {
   mounted() {},
 
   methods: {
+    onAddFolder() {
+      const input = document.createElement('input')
+      // input["style"] = "background: rgba(255, 255, 255, 0);overflow: hidden;position: fixed;width: 1px;height: 1px;z-index: -1;opacity: 0;";
+      input.type = 'file'
+      input.setAttribute('allowdirs', 'true')
+      input.setAttribute('directory', 'true')
+      input.setAttribute('webkitdirectory', 'true')
+      input.multiple = true
+      document.querySelector('body').appendChild(input)
+      // todo 这里增加了input标签，可以给它删掉
+      input.click()
+      const _this = this
+      input.onchange = async function (e) {
+        const formData = new FormData()
+        const file = e.target['files']
+        console.log(file, 'llkkkjjj')
+        for (let i = 0; i < file.length; i++) {
+          formData.append('files', file[i], file[i].webkitRelativePath)
+        }
+        const { msg } = await _this.$http.post('file/upload', formData)
+        _this.$message.success(msg)
+        // document.querySelector("body").removeChild(input);
+      }
+    },
     // 按钮点击时间方法，构建插件对象
     btnClick() {
       // 更多参数 和使用可以看它包里面的README.md文件

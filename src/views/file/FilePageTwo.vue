@@ -1,189 +1,226 @@
 <template>
   <div>
-    <p>flat方法</p>
-    <p>[1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]]</p>
-    <p>值：{{ arr5Last }}</p>
-    <h3>时间排序之前：</h3>
-    <p>{{ this.firtData[0][0] || '-' }}</p>
-    <p>{{ this.firtData[1][0] || '-' }}</p>
-    <p>{{ this.firtData[2][0] || '-' }}</p>
-    <h3>时间排序之后：</h3>
-    <p>{{ this.msgData[0][0] || '-' }}</p>
-    <p>{{ this.msgData[1][0] || '-' }}</p>
-    <p>{{ this.msgData[2][0] || '-' }}</p>
+    <div class="dragUpload">
+      <el-upload
+        :limit="7"
+        ref="enclosureUpload"
+        :file-list="fileList"
+        accept=".xlsx, .xls, .pdf, .jpg, .jpeg, .gif, .png, .doc, .docx"
+        :headers="tokens"
+        :multiple="true"
+        :show-file-list="false"
+        :auto-upload="false"
+        :on-change="handleFileChange"
+        :on-success="enclosureHandleSuccess"
+        :on-exceed="handleExceed"
+        :before-upload="handlebeforeUpload"
+      >
+        <el-button type="info" size="small" class="btn" @click="uploadmore">
+          批量导入
+        </el-button>
+      </el-upload>
+
+      <!-- 
+       因为有了 debounce() 也可以不用 点击上传，debounce()自动 上传
+
+        <el-button
+        type="primary"
+        :loading="uploadLoading"
+        :disabled="uploadLoading"
+        size="small"
+        class="comfirm"
+        @click="submitUpload"
+        v-if="fileList.length"
+      >
+        确定上传
+      </el-button>
+
+      <div v-if="enclosureList.length" class="upload_idlist">
+        <span>附件id列表:</span>
+        <ul>
+          <li v-for="item in enclosureList" :key="item">
+            <i class="del_idlist" @click="delIdlist(item)">×</i>
+            <span>{{ item }}</span>
+          </li>
+        </ul>
+
+        <div class="aglingComfirm">
+          <el-button type="primary" size="small" class="btn" @click="resetsubmitUpload">
+            重新上传 ( 已有{{ enclosureList.length }}条数据 )
+          </el-button>
+          <el-button type="info" size="small" class="btn" @click="delUploadList">
+            清除已上传数据
+          </el-button>
+        </div>
+      </div> -->
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'JjjjFilePageTwo',
+import { uploadFile, uploadApi } from '@/api/xxxxxx' //api 请求
 
+export default {
   data() {
     return {
-      arr5Last: [],
-      firtData: [
-        [
-          { id: '1', date: '2020-11-21  15:16:09' },
-          { id: '2', date: '2020-11-22  10:11:06' },
-          { id: '3', date: '2020-11-24  15:32:06' }
-        ],
-        [
-          { id: '4', date: '2021-11-21  15:16:09' },
-          { id: '5', date: '2021-11-22  10:11:06' },
-          { id: '6', date: '2021-11-24  15:32:06' }
-        ],
-        []
-      ],
-      msgData: []
+      tokens: {
+        Authorization: localStorage.getItem('token')
+      },
+      uploadLoading: false,
+      fileList: [],
+      enclosureList: [],
+      exportLoading: false,
+      timer: null
     }
   },
 
-  mounted() {
-    // this.cesi()
-    // this.dier()
-    this.timeDate()
-  },
+  mounted() {},
 
   methods: {
-    timeDate() {
-      let time1 = this.firtData[0][0] ? Date.parse(this.firtData[0][0].date) : 1
-      let time2 = this.firtData[1][0] ? Date.parse(this.firtData[1][0].date) : 2
-      let time3 = this.firtData[2][0] ? Date.parse(this.firtData[2][0].date) : 3
-      let timeArr = [
-        {
-          id: 0,
-          time: time1
-        },
-        {
-          id: 1,
-          time: time2
-        },
-        {
-          id: 2,
-          time: time3
-        }
-      ]
+    uploadmore(v) {
+      console.log('批量导入', v)
+    },
 
-      timeArr.sort((a, b) => {
-        //  b-a 就是后边的值减前边的值    降序
-        return b.time - a.time
+    // 过滤重复
+    filterRepetition(arr) {
+      let arr1 = [] //存id
+      let newArr = [] //存新数组
+      for (let i in arr) {
+        if (arr1.indexOf(arr[i].name) == -1) {
+          arr1.push(arr[i].name)
+          newArr.push(arr[i])
+        }
+      }
+      return newArr
+    },
+
+    handlebeforeUpload(file, fileList) {
+      console.log('上传前', file, fileList)
+    },
+
+    // 修改 存放要上传的文件列表
+    handleFileChange(file, fileList) {
+      let arr = this.filterRepetition(fileList)
+      if (arr.length !== fileList.length) {
+        this.$message('上传重复文件，已过滤重复文件')
+      }
+
+      this.fileList = arr
+
+      // 上传文件后，自动把文件传给后台，这里做了一个防抖，等待500ms后在传给后台
+      this.debounce(this.submitUpload, 500)
+    },
+
+    // element上传多个文件时，会把每个文件做个单独请求
+    // 这里的方法是请求最后一次
+    debounce(fn, waits) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+        this.timer = null
+      }
+
+      this.timer = setTimeout(() => {
+        fn.apply(this, arguments) // 把参数传进去
+      }, waits)
+    },
+
+    // 确定
+    async submitUpload() {
+      if (this.fileList.length === 0) {
+        this.$message.success('请上传文件')
+        return
+      }
+
+      this.uploadLoading = true
+      let formData = new FormData() //  用FormData存放上传文件
+      this.fileList.forEach((file) => {
+        formData.append('file', file.raw) // file.raw
       })
-      let lastArr = []
-      for (let i = 0; i < timeArr.length; i++) {
-        let index = timeArr[i].id
-        lastArr.push(this.firtData[index])
-      }
-      this.msgData = lastArr
-    },
-    dier() {
-      let arr = [
-        {
-          a: false,
-          child: [
-            {
-              a: true,
-              b: 2
-            },
-            {
-              a: false,
-              b: 3
-            }
-          ]
-        },
-        {
-          a: true,
-          child: [
-            {
-              a: true,
-              b: 2,
-              child: [
-                {
-                  a: true,
-                  b: 4
-                },
-                {
-                  a: false,
-                  b: 4
-                }
-              ]
-            },
-            {
-              a: true,
-              b: 3
-            }
-          ]
-        },
-        {
-          a: false,
-          child: [
-            {
-              a: false,
-              b: 2
-            },
-            {
-              a: false,
-              b: 3
-            }
-          ]
+
+      // 确定上传 把在上传列表里的文件 合并到formData里面传给后台
+      let res = await uploadApi(formData)
+      console.log('结果;', res)
+
+      if (res.isSuccess) {
+        this.$message.success('上传成功')
+        res.result = res.result || []
+        this.fileList = []
+        this.enclosureList = []
+        let arr = Object.prototype.toString.call(res.result)
+        if (arr === '[object Array]') {
+          this.enclosureList = res.result || []
         }
-      ]
-      const menus = this.filterMenu(arr)
-      console.log(menus, 'pppppppppppppppppp')
-      let bbb = [1, 2, 3]
-      bbb.splice(1, 0, [9, 8])
-      console.log(bbb, 'llllllllllllll')
-    },
-    // 递归
-    filterMenu(menuList) {
-      return menuList
-        .filter((item) => {
-          return item.a == true
-        })
-        .map((item) => {
-          item = Object.assign({}, item)
-          if (item.child && item.child.length > 0) {
-            item.child = this.filterMenu(item.child)
-          }
-          return item
-        })
-    },
-    cesi() {
-      let arr = [
-        { id: 1, name: '张三', age: 20 },
-        { id: 1, name: '张三', age: 20 },
-        { id: 2, name: '李四', age: 20 },
-        { id: 3, name: '马五', age: 20 }
-      ]
-      let forData = []
-      for (let i = 0; i < arr.length; i++) {
-        if (!forData.some((e) => e.id == arr[i].id)) forData.push(arr[i])
+        console.log('结果：', arr)
       }
-      console.log('输出结果:', forData)
 
-      //
-      const arr1 = [1, 2, [3, 4]]
-      arr1.flat() //不传默认第一层
-      // [1, 2, 3, 4]
-
-      const arr2 = [1, 2, [3, 4, [5, 6]]]
-      arr2.flat()
-      // [1, 2, 3, 4, [5, 6]]
-
-      const arr3 = [1, 2, '', [3, 4, [5, 6]]]
-      arr3.flat(2)
-      // [1, 2, 3, 4, 5, 6] //当数组里面有空项的时候，会过滤掉空值
-
-      const arr4 = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]]
-      arr4.flat(Infinity) //相当于扁平化最深层次的数组
-      // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-      const arr5 = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]]
-      this.arr5Last = this.digui(arr5)
-      let nnn = Array(7).fill({ a: 1 }) //快速填充数组
+      this.uploadLoading = false
     },
-    digui(list) {
-      return list.reduce((pre, item) => {
-        return pre.concat(Array.isArray(item) ? this.digui(item) : item)
-      }, [])
+
+    // 移除文件
+    async delIdlist(val) {
+      let flag = await this.$confirm(`确定移除吗？`)
+      if (flag === 'confirm') {
+        this.enclosureList = this.enclosureList.filter((res) => res !== val)
+      }
+    },
+
+    // 重新上传
+    resetsubmitUpload() {
+      this.enclosureList = []
+      this.fileList = []
+    },
+
+    // 清除记录
+    async delUploadList() {
+      let flag = await this.$confirm(`确定清除所有附件ID吗？`)
+      if (flag === 'confirm') {
+        this.enclosureList = []
+        this.fileList = []
+      }
+    },
+
+    // 取消
+    approveCancel() {
+      this.fileList = []
+      this.approve_dialog = false
+    },
+
+    // 删除时的钩子
+    onFileRemove(file, fileList) {
+      console.log('删除时钩子-fileList', fileList)
+      this.fileList = fileList
+    },
+    // 删除之前钩子
+    beforeFileRemove(file, fileList) {
+      let flag = this.$confirm(`确定移除 ${file.name}？`)
+      return flag
+    },
+
+    // 上传成功
+    enclosureHandleSuccess(response, file, fileListile) {
+      console.log('上传成功:', response, file, fileListile)
+      this.uploadLoading = false
+    },
+
+    // 上传失败
+    enclosureHandleError(err, file, fileList) {
+      this.$message({
+        showClose: true,
+        message: err,
+        type: 'error'
+      })
+      this.uploadLoading = false
+    },
+
+    // 上传文件之前
+    beforeUpload(file) {},
+
+    // 导入
+    handleExceed(files, fileList) {
+      console.log('导入', files, fileList)
+      this.$message.warning(
+        `限制选择7个文件，本次选择了 ${files.length} 个文件`
+      )
     }
   }
 }

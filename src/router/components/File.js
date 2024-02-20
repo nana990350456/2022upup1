@@ -11,12 +11,12 @@ export const FileList = [
         component: () => import('@/views/file/FilePageOne.vue'),
         meta: { title: '文件1' }
       },
-      {
-        path: '/file/filePageTwo',
-        name: 'filePageTwo',
-        component: () => import('@/views/file/FilePageTwo.vue'),
-        meta: { title: '数据测试' }
-      },
+      // {
+      //   path: '/file/filePageTwo',
+      //   name: 'filePageTwo',
+      //   component: () => import('@/views/file/FilePageTwo.vue'),
+      //   meta: { title: '数据测试' }
+      // },
       {
         path: '/file/filePageTransfer',
         name: 'filePageTransfer',

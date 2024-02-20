@@ -142,4 +142,8 @@ body > .el-container {
 #silderLeft {
   position: relative;
 }
+.main-box {
+  width: 100%;
+  height: calc(100vh - 100px);
+}
 </style>

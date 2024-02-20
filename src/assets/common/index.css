@@ -4,19 +4,19 @@ html {
   padding: 0;
   overflow: hidden;
 }
-div::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 8px;
   /* 设置滚动条宽度 */
   height: 8px;
   /* 设置滚动条高度 */
 }
-div::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   border-radius: 3px;
   /* 设置滚动条滑块圆角 */
   background-color: rgba(21, 99, 234, 0.5);
   /* 设置滑块颜色 */
 }
-div::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background-color: rgba(66, 46, 241, 0.08);
   /* 设置滑块轨道颜色 */
 }

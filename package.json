@@ -1,11 +1,12 @@
 {
   "name": "jjjj",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --report",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "version": "node ./src/utils/update-version.js"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

@@ -9,6 +9,7 @@ if (!newVersion) {
     process.exit(1);
 
 }
+console.log(process.argv,'llllllllll');
 
 // 获取当前命令行上下文路径
 

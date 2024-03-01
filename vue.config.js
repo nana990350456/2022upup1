@@ -26,7 +26,8 @@ console.log(process.env.NODE_ENV, 'env')
  }
 const  config = {
   lintOnSave: false,
-  publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/2022upup1/' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   parallel: false,

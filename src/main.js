@@ -27,7 +27,7 @@ Vue.prototype.$echarts = echarts
 // 引入lottie-web
 import lottie from 'lottie-web'
 Vue.prototype.$lottie = lottie
-
+console.info(process.env,'node进程相关信息,全局变量');
 // dataV轮播图
 // 将自动注册所有组件为全局组件
 import dataV from '@jiaminghi/data-view'
@@ -39,8 +39,8 @@ Vue.use(components)
 
 // 引入vuex
 import store from '@/store'
-console.log(process.env.VUE_APP_SERVER_URL, 'envv')
-console.log(process.env, 'en')
+// console.log(process.env.VUE_APP_SERVER_URL, 'envv')
+// console.log(process.env, 'en')
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 let sub=new Vue({

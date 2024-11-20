@@ -1,64 +1,91 @@
 <template>
   <div>
+    <!-- 日期 -->
     <div>
-      <ul class="tilte">
-        <li @click="cur = 0" :class="{ column: cur === 0 }">周计划</li>
-        <li @click="cur = 1" :class="{ column: cur === 1 }">月计划</li>
-        <li @click="cur = 2" :class="{ column: cur === 2 }">年计划</li>
-      </ul>
-      <!-- <div v-loading="true"></div> -->
-      <div class="content">
-        <div v-show="cur == 0">
+      <div>
+        <ul class="tilte">
+          <li @click="cur = 0" :class="{ column: cur === 0 }">周计划</li>
+          <li @click="cur = 1" :class="{ column: cur === 1 }">月计划</li>
+          <li @click="cur = 2" :class="{ column: cur === 2 }">年计划</li>
+        </ul>
+        <!-- <div v-loading="true"></div> -->
+        <div class="content">
+          <div v-show="cur == 0">
+            <div class="block">
+              <el-date-picker
+                class="pickerWeek"
+                v-model="startTime"
+                type="date"
+                :picker-options="startPickerOptions"
+                placeholder="选择周"
+              >
+              </el-date-picker>
+              <el-date-picker
+                class="pickerWeek"
+                popper-class="rightEnd"
+                v-model="endTime"
+                type="date"
+                :picker-options="endPickerOptions"
+                placeholder="选择周"
+              >
+              </el-date-picker>
+            </div>
+          </div>
+          <div v-show="cur == 1">
+            <div class="block">
+              <el-date-picker
+                v-model="chooseMonth"
+                type="month"
+                placeholder="选择月"
+              >
+              </el-date-picker>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-show="cur == 2">
+        <div class="container">
           <div class="block">
             <el-date-picker
-              class="pickerWeek"
-              v-model="startTime"
-              type="date"
-              :picker-options="startPickerOptions"
-              placeholder="选择周"
-            >
-            </el-date-picker>
-            <el-date-picker
-              class="pickerWeek"
-              popper-class="rightEnd"
-              v-model="endTime"
-              type="date"
-              :picker-options="endPickerOptions"
-              placeholder="选择周"
+              v-model="chooseYear"
+              type="year"
+              placeholder="选择年"
             >
             </el-date-picker>
           </div>
         </div>
-        <div v-show="cur == 1">
-          <div class="block">
-            <el-date-picker
-              v-model="chooseMonth"
-              type="month"
-              placeholder="选择月"
-            >
-            </el-date-picker>
-          </div>
-        </div>
+        <dir></dir>
       </div>
+      <ul></ul>
     </div>
-    <div v-show="cur == 2">
-      <div class="container">
-        <div class="block">
-          <el-date-picker v-model="chooseYear" type="year" placeholder="选择年">
-          </el-date-picker>
-        </div>
-      </div>
-      <dir></dir>
-    </div>
-    <ul></ul>
+    <!-- 截图 -->
+
+    <el-date-picker
+      v-model="form.statisticsTime"
+      type="daterange"
+      value-format="yyyy-MM-dd"
+      range-separator="~"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :picker-options="pickerOptions"
+      prefix-icon="0"
+    />
+    <FilePageOne />
   </div>
 </template>
 
 <script>
+import FilePageOne from '@/views/date/components/FilePageOne.vue'
 export default {
   name: 'DateElement',
+  components: {
+    FilePageOne
+  },
   data() {
     return {
+      form: {
+        statisticsTime: [new Date(), new Date()]
+      },
       header: ['列1', '列2', '列3'],
       cur: 0, // 默认选中第一个值
       data1: {
@@ -116,7 +143,7 @@ export default {
             }
           }
         ]
-      }
+      },
       //    : {
       //   // disabledDate是一个函数,参数是当前选中的日期值,这个函数需要返回一个Boolean值,
       //   disabledDate: (time) => {
@@ -127,11 +154,57 @@ export default {
       //     return this.dealDisabledDate(time)
       //   }
       // }, // 日期设置对象
+      // 日期选择七天内,且当前时间后不能选择
+      pickerOptions: {
+        onPick: (time) => {
+          if (time.minDate && !time.maxDate) {
+            // 选择开始时间未选择结束时间
+            this.timeOptionRange = time.minDate
+          }
+          if (time.maxDate) {
+            // 选择结束时间
+            this.timeOptionRange = null // 清除开始时间，表示已经完成选择
+          }
+        },
+        disabledDate: (time) => {
+          const now = new Date()
+          const todayStart = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate()
+          )
+          const todayEnd = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() + 1
+          ) // 明天的开始时间
+
+          if (!this.timeOptionRange) {
+            // 没有选择开始时间时，只能选择今天及之前的日期
+            return time.getTime() > todayEnd.getTime() // 今天及之前的日期都可以选择
+          }
+
+          // 已经选择了开始时间，限制选择范围为开始时间前后7天
+          const start = this.timeOptionRange
+          const end = new Date(start)
+          end.setDate(start.getDate() + 7)
+
+          // 确保今天始终可以选择
+          if (
+            time.getTime() >= todayStart.getTime() &&
+            time.getTime() < todayEnd.getTime()
+          ) {
+            return false // 今天始终可以选择
+          }
+
+          return (
+            time.getTime() < start.getTime() || time.getTime() > end.getTime()
+          )
+        }
+      }
     }
   },
-  created() {
-    //  this.datatimestatus()
-  },
+  created() {},
 
   mounted() {
     // this.initSSE()

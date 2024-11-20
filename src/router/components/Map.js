@@ -15,12 +15,7 @@ export const MapList = [
         component: () => import('@/views/test/map/MapContainer.vue'),
         meta: { title: 'map测试' }
       },
-      {
-        path: '/wendu',
-        name: 'wendu',
-        component: () => import('@/views/test/wendu/WenDu.vue'),
-        meta: { title: 'canvas测试' }
-      },
+
       {
         path: '/wendu1',
         name: 'wendu1',
@@ -31,13 +26,13 @@ export const MapList = [
         path: '/wendu2',
         name: 'wendu2',
         component: () => import('@/views/test/wendu/WenDu2.vue'),
-        meta: { title: 'canvas测试3' }
+        meta: { title: 'canvas红外' }
       },
       {
         path: '/wendu3',
         name: 'wendu3',
         component: () => import('@/views/test/wendu/WenDu3.vue'),
-        meta: { title: 'canvas测试3' }
+        meta: { title: 'canvas刮刮乐' }
       },
 
     ]

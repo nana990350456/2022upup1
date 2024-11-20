@@ -48,3 +48,13 @@ html {
 .el-date-table td.disabled div {
   background: aqua !important;
 }
+.el-drawer.ttb {
+  height: calc(100% - 12px) !important;
+}
+.el-drawer.ttb .el-drawer__header {
+  padding-bottom: 12px;
+  border-bottom: 2px solid #c3cedb;
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+}

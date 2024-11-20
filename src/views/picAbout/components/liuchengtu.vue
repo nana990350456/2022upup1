@@ -1,10 +1,10 @@
 <template>
-  <div>222222222222222</div>
+  <div>流程图</div>
 </template>
 
 <script>
 export default {
-  name: 'JjjjEchartsPage5',
+  name: 'JjjjLiuchengtu',
 
   data() {
     return {}
@@ -15,5 +15,3 @@ export default {
   methods: {}
 }
 </script>
-
-<style lang="scss" scoped></style>

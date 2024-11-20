@@ -77,12 +77,8 @@ export default {
       //方式二
       let domImg = document.querySelector('.imgMark')
       localStorage.setItem('picUrl', base64data)
-      const res = domImg.getAttribute('src')
-      if (!res) {
-        this.url = base64data
-        // this.$forceUpdate()
-        location.reload()
-      }
+      domImg.getAttribute('src')
+      this.url = base64data
     },
 
     convertImageToCanvas(image) {

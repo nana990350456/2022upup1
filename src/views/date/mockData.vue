@@ -2,6 +2,13 @@
   <div>
     mock数据
     {{ res }}
+    <el-progress
+      type="dashboard"
+      :percentage="50"
+      :stroke-width="26"
+      :text-inside="false"
+      :format="format"
+    ></el-progress>
   </div>
 </template>
 
@@ -22,6 +29,9 @@ export default {
   },
 
   methods: {
+    format(percentage) {
+      return percentage === 100 ? '已完成' : `${percentage}%`
+    },
     init() {
       axios
         .post('/data/list')
@@ -36,4 +46,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-progress__text {
+  display: block;
+  font-size: 20px;
+  color: #1f2d3d;
+}
+</style>

@@ -1,19 +1,7 @@
 <template>
   <div class="hello">
     <!-- 上面表格 -->
-    <span class="title"> eeeeeeeeeee11111</span>
-    <input
-      v-model="input"
-      placeholder="请输入内容请输入内容请输入内容请输入内容"
-      style="
-        width: 200px;
-        height: 100px;
-        word-wrap: break-word;
-        white-space: pre-wrap;
-      "
-    />
-    <!-- <div>123222222222{{ $style['--npcolor'] }}</div> -->
-
+    <!-- <span class="title"> 颜色变量</span> -->
     <el-table
       ref="tableRef"
       class="topTable"
@@ -27,39 +15,38 @@
       @row-contextmenu="rightClick"
     >
       <el-table-column type="index" width="50"> </el-table-column>
-      <template v-for="(item, i) in tableInfo">
-        <el-table-column
-          :key="i"
-          :prop="tableInfo1111[i].key"
-          :label="item.value"
-          :width="item.width"
-        >
-          <template slot-scope="scope" slot="header">
-            <span v-if="item.key === 'data3'">
-              {{ item.key }}
-              <el-tooltip
-                :aa="scope"
-                class="item"
-                effect="dark"
-                content="这里指定悬浮提示文字内容"
-                placement="top-start"
+      <el-table-column
+        v-for="(item, i) in tableInfo"
+        :key="i"
+        :prop="tableInfo1111[i].key"
+        :label="item.value"
+        :width="item.width"
+      >
+        <template slot-scope="scope" slot="header">
+          <span v-if="item.key === 'data3'">
+            {{ item.key }}
+            <el-tooltip
+              :aa="scope"
+              class="item"
+              effect="dark"
+              content="这里指定悬浮提示文字内容"
+              placement="top-start"
+            >
+              <i
+                class="el-icon-warning"
+                style="color:#409eff; margin-left:5px;'"
               >
-                <i
-                  class="el-icon-warning"
-                  style="color:#409eff; margin-left:5px;'"
-                >
-                </i>
-              </el-tooltip>
-            </span>
-            <span v-else>{{ item.key }}</span>
-          </template>
-          <template v-slot="scope">
-            <span>
-              {{ scope.row[tableInfo1111[i].key] }}
-            </span>
-          </template>
-        </el-table-column>
-      </template>
+              </i>
+            </el-tooltip>
+          </span>
+          <span v-else>{{ item.key }}</span>
+        </template>
+        <template v-slot="scope">
+          <span>
+            {{ scope.row[tableInfo1111[i].key] }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="300" fixed="right">
         <template v-slot="{ row }">
           <el-button @click="edit(row)">编辑</el-button>
@@ -89,15 +76,6 @@
       style="width: 100%"
       @row-click="rowTable2"
     >
-      <!-- <el-table-column label="序号" width="80">
-        <template v-slot="scope">
-          <span :class="{'table6':tableVal == '11111' && scope.$index  == 5}">{{
-            tableVal == '11111' && scope.$index  == 5
-              ? '合计11'
-              : scope.$index + 1
-          }}</span>
-        </template>
-      </el-table-column> -->
       <el-table-column type="index" :index="indexMethod" width="50">
       </el-table-column>
       <template v-for="(item, i) in tableInfo2">
@@ -122,7 +100,7 @@
 
 <script>
 import Sortable from 'sortablejs'
-import { tableInfo, tableInfo2, tableInfo1111 } from './table1.js'
+import { tableInfo, tableInfo2, tableInfo1111 } from '@/views/drap/js/table1.js'
 import Dialog from './dialog.vue'
 // import styles from '@/styles/variables.module.scss'
 export default {
@@ -402,8 +380,6 @@ export default {
         animation: 180,
         delay: 0,
         onEnd: (evt) => {
-          // console.log(evt, '测试22222222')
-          // console.log(evt.oldIndex, evt.newIndex, '测试1111')
           const oldItem = this.tableInfo1111[evt.oldIndex - 1]
           this.tableInfo1111.splice(evt.oldIndex - 1, 1)
           this.tableInfo1111.splice(evt.newIndex - 1, 0, oldItem)
@@ -447,9 +423,9 @@ export default {
     },
     mmm() {},
     deleteClick(row, index) {
-      console.log(index)
       // console.log(row);
       this.datas1.splice(index, 1)
+      this.$message.success('删除成功')
     },
     // table的右键点击当前行事件
     rightClick(row, column, event) {
@@ -472,13 +448,12 @@ export default {
     infoClick(index) {
       switch (index) {
         case 0:
-          console.log('查看')
+          alert('查看')
           break
         case 1:
-          console.log('新增')
+          alert('新增')
           break
         case 2:
-          console.log('删除')
           this.deleteClick()
           break
         case 3:
@@ -647,7 +622,7 @@ export default {
   background-color: transparent !important;
 }
 ::v-deep.title {
-  // color: $primary-color;
+  color: $primary-color;
   display: block;
   width: 100px;
   height: 100px;

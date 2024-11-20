@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="标题" width="40%" :visible="showDialog" @close='Close'>
+  <el-dialog title="标题" width="40%" :visible="showDialog" @close="Close">
     <el-form
       ref="formDataRef"
       :model="formData"
@@ -20,10 +20,10 @@
 <script>
 export default {
   name: 'JjjjDialog22',
-  props:{
-    showDialog:{
-        type:Boolean,
-        default:false
+  props: {
+    showDialog: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -49,26 +49,25 @@ export default {
     }
   },
 
-  mounted() {
-  
-  },
+  mounted() {},
 
   methods: {
     // 根据id获取学科详情
-    async getSubjectById (id) {
+    async getSubjectById(id) {
       const { data } = await getSubjectById(id)
       this.formData = data
     },
     // 新增编辑学科
-    async btnOk () {
+    async btnOk() {
       try {
         // 验证表单
         await this.$refs.formDataRef.validate()
         // 判断是新增还是编辑
         if (this.formData.id) {
-        // 编辑
+          // 编辑
           await editSubjectById(this.formData)
-        } else {formDataRef
+        } else {
+          formDataRef
           await addSubject(this.formData)
         }
         //  通知父组件更新列表
@@ -79,7 +78,7 @@ export default {
         console.log(error)
       }
     },
-    Close () {
+    Close() {
       this.$refs.formDataRef.resetFields()
       this.formData = {
         subjectName: '',

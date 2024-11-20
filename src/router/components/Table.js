@@ -2,7 +2,7 @@ import layout from '@/layout'
 export const TableList = [
   {
     path: '/',
-    name: '表格table',
+    name: '拖拽drap',
     component: layout,
     meta: {
       title: '其它',
@@ -10,10 +10,10 @@ export const TableList = [
     },
     children: [
       {
-        path: '/table',
-        name: 'table',
-        component: () => import('@/views/table/tablePage.vue'),
-        meta: { title: '表格table' }
+        path: '/drap',
+        name: 'drap',
+        component: () => import('@/views/drap/index.vue'),
+        meta: { title: '拖拽drap' }
       }
     ]
   }

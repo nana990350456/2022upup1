@@ -5,6 +5,7 @@
       <li @click="cur = 1" :class="{ column: cur === 1 }">月计划</li>
       <li @click="cur = 2" :class="{ column: cur === 2 }">年计划</li>
     </ul>
+
     <!-- <div v-loading="true"></div> -->
     <div class="content">
       <div v-show="cur == 0">
@@ -48,6 +49,10 @@
       </div>
       <dir></dir>
     </div>
+    导航菜单
+    <daohang />
+    导航2
+    <daohang2 />
     <!-- 表格测试 -->
     <dv-scroll-board :config="config" style="width: 500px; height: 220px" />
     <iframePage class="iframePage" />
@@ -56,10 +61,14 @@
 
 <script>
 import iframePage from './iframePage.vue'
+import daohang from './daohang'
+import daohang2 from './danghang2.vue'
 export default {
   name: 'JjjjTabPage',
   components: {
-    iframePage
+    iframePage,
+    daohang,
+    daohang2
   },
   data() {
     return {

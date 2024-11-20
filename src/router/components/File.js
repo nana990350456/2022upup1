@@ -5,12 +5,6 @@ export const FileList = [
     name: 'file',
     component: layout,
     children: [
-      {
-        path: '/file/filePageOne',
-        name: 'filePageOne',
-        component: () => import('@/views/file/FilePageOne.vue'),
-        meta: { title: '文件1' }
-      },
       // {
       //   path: '/file/filePageTwo',
       //   name: 'filePageTwo',
@@ -35,6 +29,13 @@ export const FileList = [
         component: () => import('@/views/file/filePageMenuDigui.vue'),
         meta: { title: '菜单跳转递归组件' }
       },
+      {
+        path: '/file/markDown',
+        name: 'markDown',
+        component: () => import('@/views/file/markDown.vue'),
+        meta: { title: '生成markDown文档' }
+      },
+
 
     ]
   }

@@ -81,10 +81,10 @@
     <img src="@/assets/logo.png" alt="" />
     <input type="file" @change="filechange" />
     <button @click="check22222222">预览</button>
-    <!-- <div
+    <div
       ref="wordRef"
       style="width: 500px; height: 500px; background: pink"
-    ></div> -->
+    ></div>
     <!-- <VueOfficeDocx
       :src="docx"
       style="height: 100vh"
@@ -97,7 +97,7 @@
 <script>
 //引入相关样式
 // import '@vue-office/docx/lib/index.css'
-// import { renderAsync } from 'docx-preview'
+import { renderAsync } from 'docx-preview'
 // import VueOfficeDocx from '@vue-office/docx'
 import MyTransfer from './components/my-transfer.vue'
 let id = 1000
@@ -173,9 +173,7 @@ export default {
     filechange(evt) {
       let file = evt.target.files
       console.log(file)
-      this.wordblob = new Blob(file, {
-        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-      })
+      this.wordblob = new Blob(file)
     },
 
     check22222222() {
@@ -184,11 +182,11 @@ export default {
       console.log(this.$refs.wordRef, 'cesi88888888888888888')
       this.$nextTick(() => {
         this.docx = this.wordblob
-        this.$forceUpdate()
+        //this.$forceUpdate()
       })
-      // renderAsync(this.wordblob, this.$refs.wordRef).then((res) => {
-      //   console.log('res---->', res)
-      // })
+      renderAsync(this.wordblob, this.$refs.wordRef).then((res) => {
+        console.log('res---->', res)
+      })
     },
     // 筛选
     filterNode(value, data) {
